@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       namespace :user do
+        resources :posts
         post "sign_in", to: "sessions#sign_in"
         delete "sign_out", to: "sessions#sign_out"
         get "me", to: "sessions#me"
