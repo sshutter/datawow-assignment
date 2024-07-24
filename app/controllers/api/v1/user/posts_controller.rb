@@ -1,6 +1,6 @@
 class Api::V1::User::PostsController < Api::V1::User::AppController
   before_action :set_post, only: [:show, :update, :destroy]
-
+  
   # Get currents user's posts
   # GET /api/v1/user/posts
   def index
