@@ -12,8 +12,8 @@
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  failed_attempts        :integer          default(0), not null
-#  first_name             :text
-#  last_name              :text
+#  first_name             :text             not null
+#  last_name              :text             not null
 #  last_sign_in_at        :datetime
 #  last_sign_in_ip        :string
 #  locked_at              :datetime

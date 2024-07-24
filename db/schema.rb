@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_24_071104) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_24_091240) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "posts", force: :cascade do |t|
-    t.text "title"
-    t.text "body"
+    t.text "title", null: false
+    t.text "body", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -24,8 +24,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_24_071104) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.text "first_name"
-    t.text "last_name"
+    t.text "first_name", null: false
+    t.text "last_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email", default: "", null: false

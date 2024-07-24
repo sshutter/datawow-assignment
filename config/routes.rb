@@ -4,8 +4,10 @@ Rails.application.routes.draw do
       namespace :user do
         resources :posts
         post "sign_in", to: "sessions#sign_in"
+        post "register", to: "sessions#register"
         delete "sign_out", to: "sessions#sign_out"
         get "me", to: "sessions#me"
+        
       end
     end
   end

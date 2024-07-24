@@ -1,5 +1,5 @@
 class Api::V1::User::SessionsController < Api::V1::User::AppController
-  skip_before_action :set_current_user_from_header, only: [:sign_in]
+  skip_before_action :set_current_user_from_header, only: [:sign_in, :register]
 
   # params { user: { email: "email", password: "password" } }
   def sign_in
@@ -24,7 +24,9 @@ class Api::V1::User::SessionsController < Api::V1::User::AppController
   end
 
   def register
-    
+    user = User.new(params_for_register)
+    user.save
+    render json: { success: true, user: user }
   end
   
   private
