@@ -19,4 +19,8 @@
 #
 class Post < ApplicationRecord
   belongs_to :user
+
+  # Implemented model validations
+  validates :title, presence: true
+  validates :body, presence: true
 end

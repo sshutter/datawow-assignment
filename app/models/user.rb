@@ -43,6 +43,10 @@ class User < ApplicationRecord
 
   before_create :generate_auth_token
 
+  # Implement model validations
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+
   def generate_auth_token
     self.auth_token = SecureRandom.uuid
   end
