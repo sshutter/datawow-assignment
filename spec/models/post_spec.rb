@@ -25,4 +25,33 @@ RSpec.describe Post, type: :model do
   describe 'Associations' do
     it { should belong_to(:user) }
   end
+
+  # Test Database interactions
+  describe 'Database interactions' do
+    context 'when saving a post' do
+      it 'should be saved' do
+        post.save
+        expect(Post.count).to eq(1)
+      end
+
+      it 'should save a user' do
+        post.save
+        expect(User.count).to eq(1)
+      end
+    end
+
+    context 'when destroying a post' do
+      it 'should be destroyed' do
+        post.save
+        post.destroy
+        expect(Post.count).to eq(0)
+      end
+
+      it 'should not destroyed a user with the post' do
+        post.save
+        post.destroy
+        expect(User.count).to eq(1)
+      end
+    end
+  end
 end

@@ -78,4 +78,23 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  # Test interactions with database
+  describe 'Database interactions' do
+    context 'when a valid user is created' do
+      it 'should be saved' do
+        user.save
+        expect(User.last).to eql(user)
+      end
+    end
+
+    context 'when a user is destroyed' do
+      it 'should be removed from the database' do
+        user.save
+        user.destroy
+        expect(User.count).to eql(0)
+      end
+    end
+
+  end
 end
