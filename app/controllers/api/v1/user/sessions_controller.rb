@@ -34,8 +34,8 @@ class Api::V1::User::SessionsController < Api::V1::User::AppController
   # Params { user: { email: "email", password: "password", first_name: "first_name", last_name: "last_name" } }
   def register
     user = User.new(params_for_register)
-    user.save
-    render json: { success: true, user: user }, status: 201
+    raise MyError.new("User registration failed: #{user.errors.full_messages.join(', ')}") if !user.save
+    render json: { success: true, user: user.as_profile_json }, status: 201
   end
   
   private

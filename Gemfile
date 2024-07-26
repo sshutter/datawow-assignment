@@ -38,6 +38,12 @@ gem "rack-cors"
 gem "devise"
 gem "jwt"
 
+# Use Fabrication for object creation in api tests
+gem 'fabrication'
+
+# Use jsonapi-serializer for JSON API serialization in api tests
+gem 'jsonapi-serializer'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mswin mswin64 mingw x64_mingw ]
@@ -45,6 +51,7 @@ group :development, :test do
   gem "annotate"
   gem 'rspec-rails'
   gem 'shoulda-matchers'
+  gem 'json_matchers'
 end
 
 group :development do
