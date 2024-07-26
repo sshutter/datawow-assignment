@@ -3,32 +3,123 @@ class Api::V1::User::PostsController < Api::V1::User::AppController
   skip_before_action :set_current_user_from_header, only: [:posts, :post]
 
   # Get all posts
-  # GET /api/v1/user/posts
-  # Access Public
+  # 
+  # Access: Public
+  #
+  # Request:
+  # GET /api/v1/user/all_posts
+  #
+  # Response:
+  # {
+  #   "success": true,
+  #   "posts": [
+  #     {
+  #       "id": 1,
+  #       "title": "Post Title 1",
+  #       "body": "Post body text 1",
+  #       "user_id": 1,
+  #       "created_at": "2024-07-27T12:34:56.000Z",
+  #       "updated_at": "2024-07-27T12:34:56.000Z"
+  #     },
+  #     ...
+  #   ],
+  #   "count": 10
+  # }
   def posts
     posts = Post.all
     render json: { success: true, posts: posts.as_json, count: posts.count }
   end
   
   # Get single post
-  # GET /api/v1/user/posts/:id
-  # Access Public
+  # 
+  # Access: Public
+  #
+  # Request:
+  # GET /api/v1/user/all_posts/1
+  #
+  # Response:
+  # {
+  #     "success": true,
+  #     "post": {
+  #         "id": 1,
+  #         "title": "Post 2 by John",
+  #         "body": "Body of Post 2 by John",
+  #         "user_id": 1,
+  #         "created_at": "2024-07-26T22:49:17.433Z",
+  #         "updated_at": "2024-07-26T22:49:17.433Z"
+  #     }
+  # }
   def post
     post = Post.find(params[:id])
     render json: { success: true, post: post.as_json }
   end
 
-  # Get currents user's posts
+  # Get current user's posts
+  # 
+  # Access: Private
+  #
+  # Request:
   # GET /api/v1/user/posts
-  # Access Private
+  # 
+  # Headers:
+  # {
+  #   "Content-Type": "application/json",
+  #   "auth-token": "Bearer <access-token>"
+  # }
+  #
+  # Response:
+  # {
+  #   "success": true,
+  #   "posts": [
+  #     {
+  #       "id": 1,
+  #       "title": "User's Post Title",
+  #       "body": "User's post body text",
+  #       "user_id": 1,
+  #       "created_at": "2024-07-27T12:34:56.000Z",
+  #       "updated_at": "2024-07-27T12:34:56.000Z"
+  #     },
+  #     ...
+  #   ]
+  # }
   def index
     posts = current_user.posts
     render json: { success: true, posts: posts.as_json }
   end
   
   # Create a new post
+  # 
+  # Access: Private
+  #
+  # Request:
   # POST /api/v1/user/posts
-  # Access Private
+  # 
+  # Headers:
+  # {
+  #   "Content-Type": "application/json",
+  #   "auth-token": "Bearer <access-token>"
+  # }
+  # 
+  # Body:
+  # {
+  #   "post": {
+  #     "title": "New Post Title",
+  #     "body": "New post body text"
+  #   }
+  # }
+  #
+  # Response:
+  # {
+  #   "success": true,
+  #   "post": {
+  #     "id": 1,
+  #     "title": "New Post Title",
+  #     "body": "New post body text",
+  #     "user_id": 1,
+  #     "created_at": "2024-07-27T12:34:56.000Z",
+  #     "updated_at": "2024-07-27T12:34:56.000Z"
+  #   }
+  # }
   def create
     post = Post.new(params_for_create)
     post.user_id = current_user.id
@@ -36,16 +127,75 @@ class Api::V1::User::PostsController < Api::V1::User::AppController
     render  json: { success: true, post: post.as_json }, status: :created 
   end
 
-  # Get a post
-  # GET /api/v1/user/posts/:id
-  # Access Private
+  # Get a post for the current user
+  #
+  # Access: Private
+  #
+  # Request:
+  # GET /api/v1/user/posts/1
+  # 
+  # Headers:
+  # { 
+  #   "Content-Type": "application/json",
+  #   "auth-token": "Bearer <access-token>"
+  # }
+  #
+  # Response:
+  # {
+  #   "success": true,
+  #   "post": {
+  #     "id": 1,
+  #     "title": "Post Title 1",
+  #     "body": "Post body text 1",
+  #     "user_id": 1,
+  #     "created_at": "2024-07-27T12:34:56.000Z",
+  #     "updated_at": "2024-07-27T12:34:56.000Z"
+  #   }
+  # }
+  # 
+  # Errors:
+  # - 404 Not Found: Post not found
   def show
     render json: { success: true, post: @post.as_json }
   end
 
   # Update a post
-  # PUT /api/v1/user/posts/:id
-  # Access Private
+  #
+  # Access: Private
+  #
+  # Request:
+  # PUT /api/v1/user/posts/1
+  # 
+  # Headers:
+  # {
+  #   "Content-Type": "application/json",
+  #   "auth-token": "Bearer <access-token>"
+  # }
+  # 
+  # Body:
+  # {
+  #   "post": {
+  #     "title": "Updated Post Title",
+  #     "body": "Updated post body text"
+  #   }
+  # }
+  #
+  # Response:
+  # {
+  #   "success": true,
+  #   "post": {
+  #     "user_id": 1,
+  #     "title": "Updated Post Title",
+  #     "body": "Updated post body text",
+  #     "id": 1,
+  #     "created_at": "2024-07-27T12:34:56.000Z",
+  #     "updated_at": "2024-07-27T12:45:00.000Z"
+  #   }
+  # }
+  # 
+  # Errors:
+  # - 400 Bad Request: Post update failed ...
+  # - 404 Not Found: Post not found
   def update
     if @post.update(params_for_update)
       render json: { success: true, post: @post.as_json }
@@ -55,8 +205,24 @@ class Api::V1::User::PostsController < Api::V1::User::AppController
   end
 
   # Delete a post
-  # DELETE /api/v1/user/posts/:id
-  # Access Private
+  #
+  # Access: Private
+  #
+  # Request:
+  # DELETE /api/v1/user/posts/1
+  # Headers:
+  # { 
+  #   "Content-Type": "application/json",
+  #   "auth-token": "Bearer <access-token>"
+  # }
+  #
+  # Response:
+  # {
+  #   "success": true
+  # }
+  # 
+  # Errors:
+  # - 404 Not Found: Post not found
   def destroy
     @post.destroy
     render json: { success: true }

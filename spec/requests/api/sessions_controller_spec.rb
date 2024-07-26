@@ -92,7 +92,15 @@ RSpec.describe Api::V1::User::SessionsController, type: :request do
         params: { user: sign_in_attributes.except(:email) }.to_json,
         headers: { 'Content-Type' => 'application/json' }
 
-        expect(response).to have_http_status :bad_request
+        expect(response).to have_http_status :not_found
+      end
+
+      it 'response with unauthorized status' do
+        post '/api/v1/user/sign_in',
+        params: { user: sign_in_attributes.except(:password) }.to_json,
+        headers: { 'Content-Type' => 'application/json' }
+
+        expect(response).to have_http_status :unauthorized
       end
     end
   end
