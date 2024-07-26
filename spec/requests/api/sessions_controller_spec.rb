@@ -35,7 +35,7 @@ RSpec.describe Api::V1::User::SessionsController, type: :request do
     end
 
     context 'given invalid attributes' do
-      it 'response with unprocessable entity status' do
+      it 'response with bad request status' do
         post '/api/v1/user/register', 
         params: { user: register_attributes.except(:password) }.to_json,
         headers: { 'Content-Type' => 'application/json' }
