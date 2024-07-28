@@ -49,10 +49,10 @@ To set up and run the application locally, follow these steps:
     $ rails db:migrate
   ```
   Tips: I added seed data to initialize the database. Run: `rails db:seed`
-4. Start the rails server
+4. To start the Rails server on port 5001
   
   ```
-    $ rails s
+    $ rails s -p 5001
   ```
 
 ## **Running Tests**
