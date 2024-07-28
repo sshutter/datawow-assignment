@@ -47,11 +47,23 @@ class Api::V1::User::PostsController < Api::V1::User::AppController
   #         "user_id": 1,
   #         "created_at": "2024-07-26T22:49:17.433Z",
   #         "updated_at": "2024-07-26T22:49:17.433Z"
+  #     },
+  #     "user": {
+  #       "id": 1,
+  #       "email": "john@gmail.com",
+  #       "first_name": "John",
+  #       "last_name": "Doe"
   #     }
   # }
   def post
     post = Post.find(params[:id])
-    render json: { success: true, post: post.as_json }
+    user = User.find(post.user_id)
+    user_json = {}
+    user_json[:id] = user.id
+    user_json[:email] = user.email
+    user_json[:first_name] = user.first_name
+    user_json[:last_name] = user.last_name
+    render json: { success: true, post: post.as_json, user: user_json }
   end
 
   # Get current user's posts

@@ -258,7 +258,7 @@ RSpec.describe Api::V1::User::PostsController, type: :request do
       it 'response with expected json schema' do
         get "/api/v1/user/all_posts/#{post.id}", headers: { 'Content-Type' => 'application/json', 'auth-token' => user.jwt }
 
-        expect(response).to match_response_schema('post')
+        expect(response).to match_response_schema('single_post')
       end
       it 'should allow any users to view a post' do
         get '/api/v1/user/all_posts', headers: { 'Content-Type' => 'application/json' }
