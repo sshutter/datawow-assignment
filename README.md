@@ -29,19 +29,19 @@ Before you begin, ensure you have the following installed on your system:
 ## **Setup Instructions**
 
 To set up and run the application locally, follow these steps:
-1. Clone the repository
+1. **Clone the repository**
 
   ```
     $ git clone https://github.com/sshutter/datawow-assignment.git
 
     $ cd datawow-assignment
   ```
-2. Install dependencies
+2. **Install dependencies**
   
   ```
     $ bundle install
   ```
-3. Set Up the Database
+3. **Set Up the Database**
   
   ```
     $ rails db:create
@@ -50,7 +50,7 @@ To set up and run the application locally, follow these steps:
   ```
   Tips: I added seed data to initialize the database. Run: `rails db:seed`
 
-4. To start the Rails server on port 5001
+4. **To start the Rails server on port 5001** 🚀
   
   ```
     $ rails s -p 5001
@@ -63,3 +63,15 @@ To run the test suite, ensure you have [RSpec](https://github.com/rspec/rspec-ra
   ```
     $ bundle exec rspec
   ```
+
+## **How to interact with it**
+
+You have two options to interact with the Ruby on Rails application:
+
+1. **Using the Frontend**: Access the application through the frontend interface.
+   - [Frontend Repository](https://github.com/sshutter/datawow-assignment-frontend)
+
+2. **Using Postman**:
+   - Install Postman: [Download Postman](https://www.postman.com/downloads/)
+   - Refer to the API documentation in the Rails controllers to understand the available endpoints and their usage.
+
